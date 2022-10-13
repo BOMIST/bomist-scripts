@@ -35,4 +35,7 @@ $ yarn ts src/owned_inventory.ts --ownerName "Customer Name"
 │    9    │          'MYOWNPART '           │ 10  │ 'Customer Name' │ 'Shelf-B-B2' │
 └─────────┴─────────────────────────────────┴─────┴─────────────────┴──────────────┘
 Total Qty: 599
+
+$ yarn ts src/owned_inventory.ts --ownerName "Customer Name" --csv output.csv
+$ (results written to "output.csv")
 ```
