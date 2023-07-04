@@ -1,0 +1,7 @@
+"Internal PN"	"Part Number"	"Manufacturer"	"Description"	"Package"	"Value"	"Alternates"
+"CAP-20001"	"CAP-4.7u-0603"		"Generic capacitor 4.7uF 0603"	"0603"	"4.7 uF"	"CAP-00001,CAP-00002"
+"CAP-20002"	"CAP-4.7u-0805"		"Generic capacitor 4.7uF 0805"	"0805"	"4.7 uF"	"CAP-00003"
+"CAP-20003"	"CAP-10u-0402"		"Generic capacitor 10uF 0402"	"0402"	"10 uF"	"CAP-00004"
+"CAP-20004"	"CAP-10u-0603"		"Generic capacitor 10uF 0603"	"0603"	"10 uF"	"CAP-00009"
+"CAP-20005"	"CAP-10u-0805"		"Generic capacitor 10uF 0805"	"0805"	"10 uF"	"CAP-00006,CAP-00007"
+"CAP-20006"	"CAP-10u-1206"		"Generic capacitor 10uF 1206"	"1206"	"10 uF"	"CAP-00008"
