@@ -1,8 +1,8 @@
-import axios, { AxiosRequestConfig, Method } from "axios";
-import consola from "consola";
-import { arrayToMap } from "./utils";
-import { writeToPath } from "fast-csv";
 import commandLineArgs from "command-line-args";
+import consola from "consola";
+import { writeToPath } from "fast-csv";
+import { arrayToMap } from "./utils";
+import { request } from "./utils/http";
 
 const args = commandLineArgs([
   {
@@ -16,25 +16,6 @@ const args = commandLineArgs([
 //NOTE: References to "storage.restrictions.customer" and "customer"
 // will be deprecated in v2.10.
 // "storage.owner" and "contact" will be used instead
-
-async function request(
-  method: Method,
-  url: string,
-  config: AxiosRequestConfig = {}
-) {
-  try {
-    let response = await axios.request({
-      baseURL: "http://localhost:3333",
-      method,
-      url,
-      ...config,
-    });
-    return response.data;
-  } catch (err) {
-    consola.error(err);
-    throw err;
-  }
-}
 
 async function findOwnerById(ownerId: string) {
   try {
