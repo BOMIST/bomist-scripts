@@ -155,7 +155,7 @@ async function main() {
             },
           },
         }));
-      cachedRevs[bomKey];
+      cachedRevs[bomKey] = revDoc;
     }
 
     // // Make sure BOM is empty (runs only once)
