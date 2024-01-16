@@ -67,7 +67,7 @@ async function main() {
         "part.mpn": mpn,
       }));
     if (!inHousePartDoc) {
-      const inHousePartDoc = await request("POST", "/parts", {
+      inHousePartDoc = await request("POST", "/parts", {
         data: {
           part: {
             type: "in_house",
