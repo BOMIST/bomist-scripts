@@ -1,6 +1,7 @@
 import commandLineArgs from "command-line-args";
 import consola from "consola";
 import fs from "fs-extra";
+import { isNil, omitBy } from "lodash";
 import { parseCSV } from "./utils/csv";
 import { request, searchOne } from "./utils/http";
 
@@ -19,6 +20,8 @@ const CSV_HEADERS = {
   mpn: "Product ID",
   revCode: "Product Revision",
   description: "Product Description",
+  manufacturer: "Manufacturer",
+  label: "Label",
   bomEntryInternalPN: "Internal Part ID",
   bomEntryQty: "Part Quantity",
 };
@@ -50,13 +53,29 @@ async function main() {
     return acc;
   }, {});
 
+  // In-memory index of all labels (key = fullName "eg. Diode - Zener")
+  const labels = await request("GET", "/labels");
+  const labelsByFullname = labels.reduce((acc, label) => {
+    const fullName = label.fullName.trim();
+    acc[fullName] = label;
+    return acc;
+  }, {});
+
   const cachedInHouseParts = {};
   const cachedProducts = {};
   const cachedRevs = {};
   const isBOMEmpty = {};
 
   for (let row of rows) {
-    const { mpn, description, revCode, bomEntryInternalPN, bomEntryQty } = row;
+    const {
+      mpn,
+      description,
+      manufacturer,
+      label: labelFullname = "",
+      revCode,
+      bomEntryInternalPN,
+      bomEntryQty,
+    } = row;
 
     // Ensure in-house part exists
     let inHousePartDoc =
@@ -66,15 +85,30 @@ async function main() {
         "part.type": "in_house",
         "part.mpn": mpn,
       }));
+
     if (!inHousePartDoc) {
+      let labelId;
+      if (labelFullname) {
+        // Find label ID
+        labelId = labelsByFullname[labelFullname]?.id;
+        if (!labelId) {
+          consola.warn(`Label ${labelFullname} not found`);
+        }
+      }
+
       inHousePartDoc = await request("POST", "/parts", {
         data: {
-          part: {
-            type: "in_house",
-            mpn,
-            ipn: mpn,
-            description,
-          },
+          part: omitBy(
+            {
+              type: "in_house",
+              mpn,
+              ipn: mpn,
+              manufacturer,
+              description,
+              label: labelId,
+            },
+            isNil
+          ),
         },
       });
       cachedInHouseParts[mpn] = inHousePartDoc;
@@ -143,7 +177,7 @@ async function main() {
     // Create BOM Entry
     const part = partsByIpn[bomEntryInternalPN];
     if (!part) {
-      consola.warn(`can't find part ${bomEntryInternalPN} (skipping BOM row)`);
+      consola.warn(`Can't find part ${bomEntryInternalPN} (skipping BOM row)`);
       continue;
     }
     await request("POST", `/projects/${productDoc.id}/revs/${revDoc.id}/bom`, {
