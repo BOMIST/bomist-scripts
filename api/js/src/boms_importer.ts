@@ -12,8 +12,9 @@ const ARGS = commandLineArgs([
   },
 ]);
 
-// This script assumes all parts have been already imported (except in-house parts/products)
-// and that parts are matched and assigned in BOM entries through their "Internal PN"
+// This script assumes all parts have been already imported (except the in-house parts/products
+// to be imported here), that parts are matched and assigned in BOM entries through their
+// "Internal PN" and that Internal PNs are unique
 
 //NOTE: you may edit these values to match your CSV file headers
 const CSV_HEADERS = {
@@ -112,6 +113,8 @@ async function main() {
         },
       });
       cachedInHouseParts[mpn] = inHousePartDoc;
+      // add part to index
+      partsByIpn[mpn] = inHousePartDoc.part;
     }
 
     // Ensure product exists
