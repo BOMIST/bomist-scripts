@@ -154,7 +154,6 @@ async function main() {
           data: {
             project_rev: {
               revCode,
-              part: inHousePartDoc.id,
             },
           },
         }));
