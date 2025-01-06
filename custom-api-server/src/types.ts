@@ -1,3 +1,11 @@
+interface SearchQuotesRequest {
+  data: SearchMatchData[];
+}
+
+interface SearchQuotesResponse {
+  quotes: SearchQuoteData[];
+}
+
 interface SearchMatchData {
   mpn: string;
   manufacturer: string;
@@ -19,14 +27,6 @@ interface SearchQuoteData {
     name: string;
     url?: string;
   };
-}
-
-interface SearchQuotesRequest {
-  data: SearchMatchData[];
-}
-
-interface SearchQuotesResponse {
-  quotes: SearchQuoteData[];
 }
 
 interface Qty {
