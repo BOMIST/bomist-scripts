@@ -1,17 +1,17 @@
-interface SearchQuotesRequest {
+export interface SearchQuotesRequest {
   data: SearchMatchData[];
 }
 
-interface SearchQuotesResponse {
+export interface SearchQuotesResponse {
   quotes: SearchQuoteData[];
 }
 
-interface SearchMatchData {
+export interface SearchMatchData {
   mpn: string;
   manufacturer: string;
 }
 
-interface SearchQuoteData {
+export interface SearchQuoteData {
   mpn: string;
   manufacturer: string;
   priceBreaks: PriceBreak[];
@@ -29,12 +29,12 @@ interface SearchQuoteData {
   };
 }
 
-interface Qty {
+export interface Qty {
   value: number;
   uom: string;
 }
 
-interface PriceBreak {
+export interface PriceBreak {
   currency: string;
   price: number;
   qty: number | Qty;

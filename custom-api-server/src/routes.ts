@@ -1,5 +1,11 @@
 import { Request, Server } from "@hapi/hapi";
 import random from "random";
+import {
+  SearchMatchData,
+  SearchQuoteData,
+  SearchQuotesRequest,
+  SearchQuotesResponse,
+} from "./types";
 
 export default (server: Server) => {
   server.route({
