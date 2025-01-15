@@ -29,3 +29,7 @@ Data formats, including data to be sent to the API and retrieved by it, can be f
 Authentication is based on an _API Key_ which should be set on the app under `Settings > Workspace > Quotes > Custom Quotes API`. The app will then send this API key on the `x-api-key` HTTP header. The server should then validate the value passed on this header.
 
 An example of authentication can be found on this file: [src/auth.ts](./src/auth.ts)
+
+## Caching
+
+The app doesn't cache any data coming from this API and will request quotes every time they are needed. Any caching, if needed, has to be implemented on the API server. This example doesn't provide caching.

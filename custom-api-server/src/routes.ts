@@ -56,7 +56,7 @@ function createDummyQuote(matchData: SearchMatchData): SearchQuoteData {
     })),
     product: {
       sku: `SKU-${mpn}`,
-      url: `https://google.com/q=${mpn}`,
+      url: `https://google.com/search?q=${mpn}`,
     },
     supplier: {
       name: "Custom Supplier",
